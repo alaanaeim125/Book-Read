@@ -23,7 +23,8 @@ class SearchScreen extends React.Component {
   makeFilterBooks = (query) => {
     let queryPure = query.trim();
     BooksAPI.search(queryPure).then((res) => {
-      if (res === undefined || res === "") {
+      if (res === undefined ||
+        (res.error && res.error === "empty query")) {
         this.setState({ BooksFilter: [], error: true });
       } else {
         this.setState({
