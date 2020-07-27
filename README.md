@@ -17,3 +17,14 @@ MyReads is a simple cataloging app that allows you to place books in one of thre
 
 ## Screenshots
 
+<h1 >Home Page</h1>
+<p float="left">
+      <img src="./screenShot/A.PNG" width="40%"   /> 
+      <img src="./screenShot/B.PNG" width="40%" /> 
+</p>
+ 
+<h1 >Search page</h1>
+<p float="left">
+      <img src="./screenShot/C.PNG" width="40%" /> 
+      <img src="./screenShot/D.PNG" width="40%" /> 
+</p>
