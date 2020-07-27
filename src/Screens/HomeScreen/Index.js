@@ -1,52 +1,12 @@
 import React from "react";
-import * as BooksAPI from "../../BooksAPI";
 import "../../../src/App.css";
 import { Link } from "react-router-dom";
 import Book from "../../Components/Book";
 class HomeScreen extends React.Component {
-  // state books to store books when get all from api
-  state = {
-    books: [],
-  };
 
-  // function get all books
-  getAllBooksFromApi = () => {
-    BooksAPI.getAll().then((books) => {
-      this.setState({
-        books: books,
-      });
-    });
-  };
-
-  // funtion to update shelf books
-  changeBookShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(() => {
-      var Books = [...this.state.books];
-      var index = Books.findIndex(
-        (originalBook) => originalBook.id === book.id
-      );
-      if (index >= 0) {
-        Books[index].shelf = shelf;
-      } else {
-        book.shelf = shelf;
-        Books.push(book);
-      }
-      this.setState({ books: Books });
-    });
-  };
-
-  // lifeCycle to call function get all books after loading
-  componentDidMount() {
-    this.getAllBooksFromApi();
-  }
-
-  /*
-   * Changed Redirect to page using state by using react router dom
-   * and use Link to navigate to pages (search Screen)
-   * @Naeeim
-   */
-
+ 
   render() {
+    const { books, changeBookShelf} = this.props;
     return (
       <div className="app">
         <div className="list-books">
@@ -59,8 +19,8 @@ class HomeScreen extends React.Component {
                 <h2 className="bookshelf-title">Currently Reading</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    {this.state.books.length > 0 &&
-                      this.state.books
+                    {books.length > 0 &&
+                      books
                         .filter((book) => {
                           return book.shelf === "currentlyReading";
                         })
@@ -68,7 +28,7 @@ class HomeScreen extends React.Component {
                           <li key={book.title}>
                             <Book
                               book={book}
-                              changeBookShelf={this.changeBookShelf}
+                              changeBookShelf={changeBookShelf}
                             />
                           </li>
                         ))}
@@ -79,8 +39,8 @@ class HomeScreen extends React.Component {
                 <h2 className="bookshelf-title">Want to Read</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    {this.state.books.length > 0 &&
-                      this.state.books
+                    {books.length > 0 &&
+                      books
                         .filter((book) => {
                           return book.shelf === "wantToRead";
                         })
@@ -88,7 +48,7 @@ class HomeScreen extends React.Component {
                           <li key={book.title}>
                             <Book
                               book={book}
-                              changeBookShelf={this.changeBookShelf}
+                              changeBookShelf={changeBookShelf}
                             />
                           </li>
                         ))}
@@ -99,8 +59,8 @@ class HomeScreen extends React.Component {
                 <h2 className="bookshelf-title">Read</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-                    {this.state.books.length > 0 &&
-                      this.state.books
+                    {books.length > 0 &&
+                      books
                         .filter((book) => {
                           return book.shelf === "read";
                         })
@@ -108,7 +68,7 @@ class HomeScreen extends React.Component {
                           <li key={book.title}>
                             <Book
                               book={book}
-                              changeBookShelf={this.changeBookShelf}
+                              changeBookShelf={changeBookShelf}
                             />
                           </li>
                         ))}
@@ -125,13 +85,7 @@ class HomeScreen extends React.Component {
              * send function change book shelf
              */}
             <Link
-              to={{
-                pathname: "/search",
-                sendData: {
-                  Books: this.state.books,
-                  changeBookShelf: this.changeBookShelf,
-                },
-              }}
+              to="/search"
             >
               <button>Add a book</button>
             </Link>

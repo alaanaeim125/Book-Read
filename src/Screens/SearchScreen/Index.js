@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Book from "../../Components/Book";
 import * as BooksAPI from "../../BooksAPI";
-import { withRouter } from "react-router-dom";
 
 class SearchScreen extends React.Component {
   state = {
@@ -36,7 +35,7 @@ class SearchScreen extends React.Component {
   };
 
   makeUpdateOnBooks = (result) => {
-    this.props.location.sendData.Books.forEach((book) => {
+    this.props.books.forEach((book) => {
       const bookIndex = result.findIndex(
         (searchBook) => searchBook.id === book.id
       );
@@ -88,7 +87,7 @@ class SearchScreen extends React.Component {
                 <Book
                   book={book}
                   shelf="none"
-                  changeBookShelf={this.props.location.sendData.changeBookShelf}
+                  changeBookShelf={this.props.changeBookShelf}
                 />
               </li>
             ))}
@@ -99,4 +98,4 @@ class SearchScreen extends React.Component {
   }
 }
 
-export default withRouter(SearchScreen);
+export default SearchScreen;
